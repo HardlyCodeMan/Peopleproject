@@ -49,4 +49,27 @@ contract("People", async function() {
             truffleAssert.ErrorType.REVERT
         );
     });
+    it("Should create a person and set the senior flag as true", async function () {
+        let instance = await People.deployed();
+
+        instance.createPerson(
+            "Alice",
+            70,
+            142,
+            {
+                value: web3.utils.toWei(
+                    "1",
+                    "ether"
+                )
+            }
+        );
+
+        let result = await instance.getPerson();
+        assert(result.senior === true, "Senior flag not set");
+    });
+    it("Should set age correctly", async function () {
+        let instance = await People.deployed();
+        let result = await instance.getPerson();
+        assert(result.age.toNumber() === 70, "Age not set correctly");
+    });
 });
