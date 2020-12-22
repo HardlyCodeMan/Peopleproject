@@ -18,16 +18,19 @@ const People = artifacts.require("People");
 const truffleAssert = require('truffle-assertions');
 
 contract("People", async function(accounts) {
+    let instance;
+
+    // beforeEach with initialise a new contract with startup values
+    beforeEach(async function() {
+        instance = People.new();
+    });
+
     it("Non-owner should not be able to delete people", async function() {
-        let instance = await People.deployed();
-        
         await instance.createPerson("Person 1", 35, 170, {from: accounts[1], value: web3.utils.toWei("1", "ether")});
         await truffleAssert.fails(instance.deletePerson(accounts[1], {from: accounts[1]}), truffleAssert.ErrorType.REVERT);
     });
     it("Owner should be able to delete people", async function() {
-        let instance = await People.deployed();
-        
-        await instance.createPerson("Person 2", 35, 170, {from: accounts[2], value: web3.utils.toWei("1", "ether")});
+        await instance.createPerson("Person 1", 35, 170, {from: accounts[2], value: web3.utils.toWei("1", "ether")});
         await truffleAssert.passes(instance.deletePerson(accounts[2], {from: accounts[0]}));
     });
 });
