@@ -11,7 +11,7 @@
 const People = artifacts.require("People");
 const truffleAssert = require('truffle-assertions');
 
-contract("People", async function() {
+contract("People", async function(accounts) {
     it("Shouldn't create a person with age over 150 years", async function() {
         let instance = await People.deployed();
         
@@ -71,5 +71,5 @@ contract("People", async function() {
         let instance = await People.deployed();
         let result = await instance.getPerson();
         assert(result.age.toNumber() === 70, "Age not set correctly");
-    });
+    });  
 });
