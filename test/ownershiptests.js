@@ -19,8 +19,13 @@ const truffleAssert = require('truffle-assertions');
 
 contract("People", async function(accounts) {
     let instance;
+    
+    // before() runs once before anythign else
+    before(async function() {
+        instance = await People.Deployed();
+    });
 
-    // beforeEach with initialise a new contract with startup values
+    // beforeEach() will initialise a new contract with startup values prior to each test
     beforeEach(async function() {
         instance = People.new();
     });
