@@ -22,13 +22,19 @@ contract("People", async function(accounts) {
     
     // before() runs once before anythign else
     before(async function() {
-        instance = await People.Deployed();
+        instance = await People.deployed();
     });
 
+    /*
     // beforeEach() will initialise a new contract with startup values prior to each test
     beforeEach(async function() {
         instance = People.new();
     });
+    */
+
+    // after() and
+    // afterEach()
+    // can also be helpful for testing
 
     it("Non-owner should not be able to delete people", async function() {
         await instance.createPerson("Person 1", 35, 170, {from: accounts[1], value: web3.utils.toWei("1", "ether")});
